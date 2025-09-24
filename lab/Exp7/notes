@@ -1,0 +1,69 @@
+Aim:
+   To Create a weather application that displays the weather forecast for a specific location.
+
+Description:
+    This project is a React.js weather application that displays the current weather and forecast for a specific location.
+    Users can enter a city or location, and the app fetches weather data from a weather API (like OpenWeatherMap) using fetch or Axios.
+    The app uses React state to store the data and dynamically updates the UI with temperature, humidity, wind speed, and weather conditions.
+    Components like SearchBar, WeatherCard, and Forecast make the app modular and reusable. CSS styling ensures a clean, responsive, and visually appealing design.
+
+Coding:
+import React, { useState } from 'react';
+import './App.css';
+
+function App() {
+  const [city, setCity] = useState('');
+  const [weather, setWeather] = useState(null);
+
+  const API_KEY = "YOUR_API_KEY_HERE";
+
+  const getWeather = async () => {
+    if (!city) return;
+    try {
+      const response = await fetch(
+        `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${API_KEY}`
+      );
+      const data = await response.json();
+      setWeather(data);
+    } catch (error) {
+      console.error("Error fetching weather:", error);
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    getWeather();
+  };
+
+  return (
+    <div className="App">
+      <h1>Weather App</h1>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          placeholder="Enter city"
+          value={city}
+          onChange={(e) => setCity(e.target.value)}
+        />
+        <button type="submit">Get Weather</button>
+      </form>
+
+      {weather && weather.main ? (
+        <div className="weather-card">
+          <h2>{weather.name}, {weather.sys.country}</h2>
+          <p>Temperature: {weather.main.temp} °C</p>
+          <p>Humidity: {weather.main.humidity} %</p>
+          <p>Condition: {weather.weather[0].description}</p>
+          <p>Wind Speed: {weather.wind.speed} m/s</p>
+        </div>
+      ) : weather && weather.message ? (
+        <p>{weather.message}</p>
+      ) : null}
+    </div>
+  );
+}
+
+export default App;
+
+Result:
+A React Weather Application that shows real-time weather information for a chosen location using state and API data, with a clean and responsive interface.
