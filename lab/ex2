@@ -1,1 +1,30 @@
+Aim:
+    To Create a user profile page using props.
 
+Description:
+    The User Profile Page is a React component that displays a user's information such as name, email, profile picture, and bio.
+The data is passed to the component using props, which makes it dynamic and reusable for different users. The page is styled with 
+CSS to make it visually appealing and responsive across devices. Using props allows the same component to show multiple user profiles without rewriting code.
+
+Coding:
+import React from 'react';
+import UserProfile from '../components/UserProfile';
+
+export default function UserProfilePage() {
+  return (
+    <section className="intro">
+      <h2>User Profile</h2>
+      <UserProfile
+        name="Alex Johnson"
+        email="alex.johnson@example.com"
+        avatarUrl={`https://api.dicebear.com/7.x/initials/svg?seed=Alex%20Johnson`}
+        membershipTier="Gold"
+        joinedOn="2023-04-12"
+        totalRentals={18}
+        location="San Francisco, CA"
+      />
+    </section>
+  );
+}
+Result:
+    A React User Profile Page that dynamically displays user details using props, with clean styling and reusable design.
